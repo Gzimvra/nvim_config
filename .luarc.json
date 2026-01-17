@@ -9,6 +9,9 @@
   },
     "diagnostics.disable": [
         "different-requires",
-        "undefined-global"
+        "undefined-global",
+        "undefined-field",
+        "inject-field",
+        "undefined-doc-name"
     ]
 }

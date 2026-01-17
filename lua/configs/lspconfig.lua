@@ -73,11 +73,28 @@ M.defaults = function()
   ------------------------------------------------
   -- Diagnostics UI
   ------------------------------------------------
-  vim.diagnostic.config {
-    signs = false,
-    underline = true,
+  vim.diagnostic.config({
     update_in_insert = true,
+    underline = false,
     severity_sort = true,
+
+    virtual_text = {
+      spacing = 4,
+      prefix = "■",
+      format = function(diagnostic)
+        return diagnostic.message
+      end,
+    },
+
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN] = "",
+        [vim.diagnostic.severity.INFO] = "",
+        [vim.diagnostic.severity.HINT] = "",
+      },
+    },
+
     float = {
       focusable = false,
       style = "minimal",
@@ -86,144 +103,176 @@ M.defaults = function()
       header = "",
       prefix = "",
     },
-  }
+  })
+
+  -- Set highlight for the virtual text itself (not the line)
+  vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#eb6f92", bg = "#2a1418" })
+  vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#f6c177", bg = "#2f2114" })
+  vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#9ccfd8", bg = "#1a2633" })
+  vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#c4a7e7", bg = "#231d33" })
 
   ------------------------------------------------
-  -- Server configurations
+  -- Mason LSPConfig Setup
   ------------------------------------------------
-  
-  -- Lua LSP
-  vim.lsp.config("lua_ls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-    settings = {
-      Lua = {
-        runtime = { version = "LuaJIT" },
-        diagnostics = {
-          globals = { "vim", "it", "describe", "before_each", "after_each" },
-        },
-        workspace = {
-          library = {
-            vim.fn.expand "$VIMRUNTIME/lua",
-            vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua",
-            "${3rd}/luv/library",
+  require("mason").setup()
+  require("mason-lspconfig").setup({
+    ensure_installed = {
+      "lua_ls",
+      "clangd",
+      "jsonls",
+      "yamlls",
+      "html",
+      "cssls",
+      "pyright",
+      "gopls",
+      "ts_ls",
+      "rust_analyzer",
+      "dockerls",
+    },
+    -- automatic_installation = true,
+
+    ------------------------------------------------
+    -- Handlers for automatic server setup
+    ------------------------------------------------
+    handlers = {
+      -- Default handler for all servers
+      function(server_name)
+        require("lspconfig")[server_name].setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
+
+      -- Lua LSP
+      ["lua_ls"] = function()
+        require("lspconfig").lua_ls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+          settings = {
+            Lua = {
+              runtime = { version = "LuaJIT" },
+              diagnostics = {
+                globals = { "vim", "it", "describe", "before_each", "after_each" },
+              },
+              workspace = {
+                library = {
+                  vim.fn.expand "$VIMRUNTIME/lua",
+                  vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua",
+                  "${3rd}/luv/library",
+                },
+              },
+              format = {
+                enable = true,
+                defaultConfig = {
+                  indent_style = "space",
+                  indent_size = "4",
+                },
+              },
+            },
           },
-        },
-        format = {
-          enable = true,
-          defaultConfig = {
-            indent_style = "space",
-            indent_size = "4",
+        })
+      end,
+
+      -- Clangd
+      ["clangd"] = function()
+        require("lspconfig").clangd.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+          cmd = { "clangd" },
+          filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+          root_dir = require("lspconfig.util").root_pattern(
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".git"
+          ),
+        })
+      end,
+
+      -- JSON
+      ["jsonls"] = function()
+        require("lspconfig").jsonls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+          settings = {
+            json = {
+              validate = { enable = true },
+            },
           },
-        },
-      },
-    },
-  })
+        })
+      end,
 
-  -- Clangd
-  vim.lsp.config("clangd", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-    cmd = { "clangd" },
-    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
-    root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
-  })
+      -- YAML
+      ["yamlls"] = function()
+        require("lspconfig").yamlls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+          settings = {
+            yaml = {
+              validate = true,
+              schemas = {
+                kubernetes = "*.yaml",
+              },
+            },
+          },
+        })
+      end,
 
-  -- JSON
-  vim.lsp.config("jsonls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-    settings = {
-      json = {
-        validate = { enable = true },
-      },
-    },
-  })
+      -- HTML
+      ["html"] = function()
+        require("lspconfig").html.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- YAML
-  vim.lsp.config("yamlls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-    settings = {
-      yaml = {
-        validate = true,
-        schemas = {
-          kubernetes = "*.yaml",
-        },
-      },
-    },
-  })
+      -- CSS
+      ["cssls"] = function()
+        require("lspconfig").cssls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- HTML
-  vim.lsp.config("html", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
+      -- Python
+      ["pyright"] = function()
+        require("lspconfig").pyright.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- CSS
-  vim.lsp.config("cssls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
+      -- Go
+      ["gopls"] = function()
+        require("lspconfig").gopls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- Python
-  vim.lsp.config("pyright", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
+      -- TypeScript
+      ["ts_ls"] = function()
+        require("lspconfig").ts_ls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- Go
-  vim.lsp.config("gopls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
+      -- Rust
+      ["rust_analyzer"] = function()
+        require("lspconfig").rust_analyzer.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
 
-  -- TypeScript
-  vim.lsp.config("ts_ls", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
-
-  -- Rust
-  vim.lsp.config("rust_analyzer", {
-    capabilities = M.capabilities,
-    on_init = M.on_init,
-  })
-
-  ------------------------------------------------
-  -- Enable servers based on filetype
-  ------------------------------------------------
-  vim.api.nvim_create_autocmd("FileType", {
-    callback = function(args)
-      local bufnr = args.buf
-      local ft = vim.bo[bufnr].filetype
-
-      -- Map filetypes to LSP servers
-      local ft_to_server = {
-        lua = "lua_ls",
-        c = "clangd",
-        cpp = "clangd",
-        objc = "clangd",
-        objcpp = "clangd",
-        cuda = "clangd",
-        json = "jsonls",
-        yaml = "yamlls",
-        html = "html",
-        css = "cssls",
-        python = "pyright",
-        go = "gopls",
-        javascript = "ts_ls",
-        typescript = "ts_ls",
-        javascriptreact = "ts_ls",
-        typescriptreact = "ts_ls",
-        rust = "rust_analyzer",
-      }
-
-      local server = ft_to_server[ft]
-      if server then
-        vim.lsp.enable(server)
-      end
-    end,
+      -- Docker
+      ["dockerls"] = function()
+        require("lspconfig").dockerls.setup({
+          capabilities = M.capabilities,
+          on_init = M.on_init,
+        })
+      end,
+    }
   })
 end
 

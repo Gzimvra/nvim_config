@@ -14,6 +14,17 @@ local options = {
     end,
   },
 
+  window = {
+    documentation = {
+      max_height = 20, -- Increase from default (~10)
+      max_width = 80,  -- Adjust width if needed
+    },
+    completion = {
+      border = "rounded", -- Optional: makes it look nicer
+      scrollbar = true,
+    },
+  },
+
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),

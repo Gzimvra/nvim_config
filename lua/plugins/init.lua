@@ -1,6 +1,7 @@
 return {
   "nvim-lua/plenary.nvim",
 
+  -- NvChad specific plugins
   {
     "nvchad/base46",
     build = function()
@@ -20,6 +21,7 @@ return {
   "nvzone/menu",
   { "nvzone/minty", cmd = { "Huefy", "Shades" } },
 
+  -- Styling Plugin
   {
     "nvim-tree/nvim-web-devicons",
     opts = {}
@@ -43,7 +45,7 @@ return {
     end,
   },
 
-  -- file managing , picker etc
+  -- File Managing/Picker etc.
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
@@ -52,15 +54,15 @@ return {
     end,
   },
 
-  -- formatting!
+  -- Text Formatting
   {
     "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = { lua = { "stylua" } },
-    },
+    opts = function()
+      return require "configs.conform"
+    end,
   },
 
-  -- git stuff
+  -- Git Stuff
   {
     "lewis6991/gitsigns.nvim",
     event = "User FilePost",
@@ -90,7 +92,7 @@ return {
     -- },
   },
 
-  -- lsp stuff
+  -- LSP Stuff
   {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
@@ -100,14 +102,24 @@ return {
   },
 
   {
+    "williamboman/mason-lspconfig.nvim",
+    lazy = false, -- Load immediately, don't lazy load
+    dependencies = { "mason.nvim" },
+  },
+
+  {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPost", "BufNewFile" },
+    lazy = false, -- Load immediately instead of on BufReadPost
+    dependencies = {
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+    },
     config = function()
       require("configs.lspconfig").defaults()
     end,
   },
 
-  -- load luasnips + cmp related in insert mode only
+  -- Autocompletion Stuff (load luasnips + cmp related in insert mode only)
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",

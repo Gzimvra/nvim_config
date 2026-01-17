@@ -18,6 +18,7 @@ return {
     mappings = {
       n = { ["q"] = require("telescope.actions").close },
     },
+    borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
   },
 
   extensions_list = { "themes", "terms" },
