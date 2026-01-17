@@ -1,0 +1,14 @@
+{
+  "Lua": {
+    "diagnostics": {
+      "globals": ["vim"]
+    },
+    "workspace": {
+      "library": ["$VIMRUNTIME/lua", "$VIMRUNTIME/lua/vim/lsp"]
+    }
+  },
+    "diagnostics.disable": [
+        "different-requires",
+        "undefined-global"
+    ]
+}

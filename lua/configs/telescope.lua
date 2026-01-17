@@ -6,6 +6,7 @@ return {
     selection_caret = " ",
     entry_prefix = " ",
     sorting_strategy = "ascending",
+    preview_cutoff = 500,
     layout_config = {
       horizontal = {
         prompt_position = "top",
@@ -20,5 +21,9 @@ return {
   },
 
   extensions_list = { "themes", "terms" },
-  extensions = {},
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({}),
+    },
+  },
 }

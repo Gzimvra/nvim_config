@@ -1,13 +1,16 @@
 dofile(vim.g.base46_cache .. "cmp")
 
 local cmp = require "cmp"
+local luasnip = require "luasnip"
 
 local options = {
-  completion = { completeopt = "menu,menuone" },
+  completion = {
+    completeopt = "menu,menuone",
+  },
 
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
 
@@ -27,8 +30,8 @@ local options = {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif require("luasnip").expand_or_jumpable() then
-        require("luasnip").expand_or_jump()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -37,8 +40,8 @@ local options = {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif require("luasnip").jumpable(-1) then
-        require("luasnip").jump(-1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -53,5 +56,22 @@ local options = {
     { name = "async_path" },
   },
 }
+
+-- SQL-specific completion (from your old config)
+cmp.setup.filetype({ "sql" }, {
+  sources = {
+    { name = "vim-dadbod-completion" },
+    { name = "buffer" },
+  },
+})
+
+-- Cmdline completion (optional but useful)
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "path" },
+    { name = "cmdline" },
+  },
+})
 
 return vim.tbl_deep_extend("force", options, require "nvchad.cmp")

@@ -52,16 +52,6 @@ return {
     end,
   },
 
-  {
-    "folke/which-key.nvim",
-    keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-    cmd = "WhichKey",
-    opts = function()
-      dofile(vim.g.base46_cache .. "whichkey")
-      return {}
-    end,
-  },
-
   -- formatting!
   {
     "stevearc/conform.nvim",
@@ -79,6 +69,27 @@ return {
     end,
   },
 
+  {
+    "tpope/vim-fugitive",
+    cmd = { "Git", "G" },
+    -- keys = {
+    --   { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
+    -- },
+  },
+
+  {
+    "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose" },
+    opts = {
+      use_icons = false,
+    },
+    -- keys = {
+    --   { "<leader>dv", "<cmd>DiffviewOpen<CR>",  desc = "Diffview open" },
+    --   { "<leader>dc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+    -- },
+  },
+
   -- lsp stuff
   {
     "mason-org/mason.nvim",
@@ -90,7 +101,7 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("configs.lspconfig").defaults()
     end,
@@ -134,7 +145,7 @@ return {
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
-       "https://codeberg.org/FelipeLema/cmp-async-path.git",
+        "https://codeberg.org/FelipeLema/cmp-async-path.git",
       },
     },
     opts = function()
@@ -144,10 +155,20 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope-ui-select.nvim"
+    },
     cmd = "Telescope",
     opts = function()
       return require "configs.telescope"
+    end,
+    config = function(_, opts)
+      local telescope = require("telescope")
+      telescope.setup(opts)
+
+      -- REQUIRED: load extensions explicitly
+      telescope.load_extension("ui-select")
     end,
   },
 
@@ -155,7 +176,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "master",
     event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
       return require "configs.treesitter"
