@@ -122,7 +122,8 @@ return {
   -- Autocompletion Stuff (load luasnips + cmp related in insert mode only)
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
+    lazy = false,
     dependencies = {
       {
         -- snippet plugin
@@ -157,6 +158,8 @@ return {
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-cmdline",
         "https://codeberg.org/FelipeLema/cmp-async-path.git",
       },
     },
