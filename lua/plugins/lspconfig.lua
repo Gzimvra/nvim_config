@@ -113,12 +113,6 @@ return {
         },
       })
 
-      -- Diagnostic highlights
-      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#eb6f92", bg = "#2a1418" })
-      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#f6c177", bg = "#2f2114" })
-      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#9ccfd8", bg = "#1a2633" })
-      vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#c4a7e7", bg = "#231d33" })
-
       -- Mason-lspconfig setup
       require("mason-lspconfig").setup({
         ensure_installed = {
