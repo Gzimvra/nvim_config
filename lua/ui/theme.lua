@@ -30,7 +30,7 @@ return {
         config = function()
             -- NOTE: you do not need to call setup if you don't want to.
             require("vague").setup({
-                transparent = true, -- don't set background
+                transparent = false, -- don't set background
 
                 style = {
                     -- "none" is the same thing as default. But "italic" and "bold" are also valid options
@@ -89,11 +89,6 @@ return {
 
             -- Choose which colorscheme to use
             vim.cmd("colorscheme vague")
-
-            -- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#eb6f92", bg = "#2a1418" })
-            -- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#f3be7c", bg = "#2f2114" })
-            -- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#9ccfd8", bg = "#262936" })
-            -- vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#7e98e8", bg = "#1a1f2e" })
         end,
     },
 }

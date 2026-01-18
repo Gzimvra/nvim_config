@@ -10,6 +10,7 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "https://codeberg.org/FelipeLema/cmp-async-path.git",
+    "onsails/lspkind-nvim",
 
     -- Snippet engine
     {
@@ -73,6 +74,7 @@ return {
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
+    local lspkind = require("lspkind")
 
     cmp.setup({
       completion = {
@@ -84,14 +86,24 @@ return {
         end,
       },
       window = {
-        documentation = {
-          max_height = 20,
-          max_width = 80,
-        },
-        completion = {
-          border = "rounded",
-          scrollbar = true,
-        },
+        completion = cmp.config.window.bordered(),    -- bordered dropdown
+        documentation = cmp.config.window.bordered(), -- bordered doc box
+      },
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = "symbol_text", -- shows icon + text
+          maxwidth = 50,        -- truncate long suggestions
+          ellipsis_char = "...",
+          preset = "default",
+          menu = {
+            buffer = "[buf]",
+            nvim_lsp = "[LSP]",
+            luasnip = "[snip]",
+            path = "[path]",
+            async_path = "[path]",
+            nvim_lua = "[api]",
+          },
+        }),
       },
       mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
