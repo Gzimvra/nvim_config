@@ -11,9 +11,11 @@ return {
 
     telescope.setup({
       defaults = {
-        prompt_prefix = "   ",
-        selection_caret = " ",
-        entry_prefix = " ",
+        prompt_prefix = "   ",
+        selection_caret = "❯ ",
+        entry_prefix = "  ",
+        multi_icon = "󰄬 ",
+        -- path_display = { "smart" },
         sorting_strategy = "ascending",
         preview_cutoff = 500,
         layout_config = {

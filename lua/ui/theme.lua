@@ -172,6 +172,8 @@ return {
                         TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
                         ]]
 
+                        Boolean = { bold = false },
+
                         DiagnosticVirtualTextHint  = makeDiagnosticColor(theme.diag.hint),
                         DiagnosticVirtualTextInfo  = makeDiagnosticColor(theme.diag.info),
                         DiagnosticVirtualTextWarn  = makeDiagnosticColor(theme.diag.warning),

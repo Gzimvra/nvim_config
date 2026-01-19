@@ -40,7 +40,6 @@ return {
                 "  Config",
                 ":Telescope find_files cwd=" .. vim.fn.stdpath("config") .. " <CR>"
             ), --  = settings/config
-            dashboard.button("s", "  Last session", ":SessionLoad<CR>"), --  = clock/history
         }
 
 
