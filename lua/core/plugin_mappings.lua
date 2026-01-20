@@ -27,6 +27,25 @@ map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidd
 -- )
 
 -- ======================
+-- Comments
+-- ======================
+-- <C-_> is {Ctrl+/} because <C-/> is not recognized
+map('n', '<C-_>', function()
+    require('Comment.api').toggle.linewise.current()
+end, { desc = 'Toggle comment on current line' })
+
+map('x', '<C-_>', function()
+    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    vim.api.nvim_feedkeys(esc, 'nx', false)
+    local mode = vim.fn.visualmode()
+    if mode == '\22' then  -- \22 is Ctrl-V (visual block mode)
+        require('Comment.api').toggle.blockwise(mode)
+    else
+        require('Comment.api').toggle.linewise(mode)
+    end
+end, { desc = 'Toggle comment on selection' })
+
+-- ======================
 -- Conform
 -- ======================
 -- map({ "n", "x" }, "<leader>fm", function()
