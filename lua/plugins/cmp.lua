@@ -86,8 +86,14 @@ return {
         end,
       },
       window = {
-        completion = cmp.config.window.bordered(),    -- bordered dropdown
-        documentation = cmp.config.window.bordered(), -- bordered doc box
+        completion = {
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+          winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+        },
+        documentation = {
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+          winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+        },
       },
       formatting = {
         format = lspkind.cmp_format({
@@ -104,6 +110,10 @@ return {
             nvim_lua = "[api]",
           },
         }),
+      },
+      experimental = {
+        ghost_text = true, -- shows preview of completion inline
+        native_menu = false,
       },
       mapping = {
         ["<C-p>"] = cmp.mapping.select_prev_item(),
