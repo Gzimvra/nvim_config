@@ -1,59 +1,62 @@
 return {
-  -- Gitsigns - Git decorations and hunks
-  {
-    "lewis6991/gitsigns.nvim",
-    event = "User FilePost",
-    config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = { text = "│" },
-          change = { text = "│" },
-          delete = { text = "_" },
-          topdelete = { text = "‾" },
-          changedelete = { text = "~" },
-        },
+    -- Gitsigns - Git decorations and hunks
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup({
+                signcolumn = true,
+                numhl = false,
+                linehl = false,
 
-        current_line_blame = false,
+                signs = {
+                    add = { text = "│" },
+                    change = { text = "│" },
+                    delete = { text = "_" },
+                    topdelete = { text = "‾" },
+                    changedelete = { text = "~" },
+                },
 
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
+                current_line_blame = false,
 
-          local function map(mode, lhs, rhs, desc)
-            vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-          end
+                on_attach = function(bufnr)
+                    local gs = package.loaded.gitsigns
 
-          map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
-          map("n", "<leader>gt", gs.toggle_current_line_blame, "Toggle blame")
-          map("n", "<leader>gs", gs.toggle_signs, "Toggle git signs")
+                    local function map(mode, lhs, rhs, desc)
+                        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+                    end
+
+                    map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
+                    map("n", "<leader>gt", gs.toggle_current_line_blame, "Toggle blame")
+                    map("n", "<leader>gs", gs.toggle_signs, "Toggle git signs")
+                end,
+            })
         end,
-      })
-    end,
-  },
+    },
 
-  -- Fugitive - Git commands
-  {
-    "tpope/vim-fugitive",
-    cmd = { "Git", "G" },
-    -- Uncomment to add keybindings
-    -- keys = {
-    --   { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
-    -- },
-  },
+    -- Fugitive - Git commands
+    {
+        "tpope/vim-fugitive",
+        cmd = { "Git", "G" },
+        -- Uncomment to add keybindings
+        -- keys = {
+        --   { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
+        -- },
+    },
 
-  -- Diffview - Git diff viewer
-  {
-    "sindrets/diffview.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    cmd = { "DiffviewOpen", "DiffviewClose" },
-    config = function()
-      require("diffview").setup({
-        use_icons = false,
-      })
-    end,
-    -- Uncomment to add keybindings
-    -- keys = {
-    --   { "<leader>dv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
-    --   { "<leader>dc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
-    -- },
-  },
+    -- Diffview - Git diff viewer
+    {
+        "sindrets/diffview.nvim",
+        dependencies = "nvim-lua/plenary.nvim",
+        cmd = { "DiffviewOpen", "DiffviewClose" },
+        config = function()
+            require("diffview").setup({
+                use_icons = false,
+            })
+        end,
+        -- Uncomment to add keybindings
+        -- keys = {
+        --   { "<leader>dv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
+        --   { "<leader>dc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+        -- },
+    },
 }

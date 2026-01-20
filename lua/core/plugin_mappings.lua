@@ -62,6 +62,13 @@ end, { desc = 'Toggle comment on selection' })
 -- ======================
 -- Cmp
 -- ======================
+-- NOTE:
+-- nvim-cmp mappings (cmp.mapping.*) are NOT normal Neovim keymaps.
+-- They ONLY work while the completion menu is visible and MUST stay
+-- inside cmp.setup({ mapping = { ... } }).
+--
+-- Do NOT move cmp mappings from plugins/cmp.lua to core/plugin_mappings.lua or vim.keymap.set
+-- or anywhere else, they will NOT work.
 
 -- ======================
 -- Undotree
@@ -81,10 +88,6 @@ end, { desc = 'Toggle comment on selection' })
 
 -- ======================
 -- Neogen
--- ======================
-
--- ======================
--- Cloak
 -- ======================
 
 -- ======================
