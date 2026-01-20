@@ -81,5 +81,4 @@ vim.opt.rtp:prepend(lazypath)
 --------------------------------------------------
 require("lazy").setup({
   { import = "plugins" }, -- automatically imports all plugin files
-  require("ui.theme"),
 }--[[, lazy_opts]]) -- lazy options
