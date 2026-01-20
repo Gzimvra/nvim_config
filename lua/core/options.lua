@@ -69,7 +69,7 @@ o.undofile = true         -- Persistent undo
 -- ======================
 -- Timing / Performance
 -- ======================
-o.timeoutlen = 200        -- Faster key sequence timeout
+o.timeoutlen = 400        -- Faster key sequence timeout
 opt.updatetime = 50       -- Faster diagnostics & git updates
 
 -- ======================
