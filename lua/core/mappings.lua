@@ -15,6 +15,8 @@ map({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete without copying in norm
 -- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
 
+map("n", "<leader><leader>", "<C-^>", { desc = "Toggle last buffer" })
+
 map("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
 map("n", "gg", "ggzz", { desc = "Go to top of file and center cursor" })
 map("n", "G", "Gzz", { desc = "Go to bottom of file and center cursor" })

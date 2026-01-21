@@ -41,7 +41,7 @@ o.mouse = "a"
 -- ======================
 -- Wrapping
 -- ======================
-opt.wrap = false           -- Disable line wrapping
+opt.wrap = true           -- Disable line wrapping
 opt.linebreak = true      -- Wrap only at word boundaries
 opt.breakindent = true    -- Preserve indent on wrapped lines
 

@@ -73,14 +73,26 @@ end, { desc = 'Toggle comment on selection' })
 -- ======================
 -- Undotree
 -- ======================
+vim.keymap.set("n", "<leader>ut", function() vim.cmd.UndotreeToggle() end, { desc = "Toggle UndoTree" })
 
 -- ======================
 -- Trouble
 -- ======================
+map("n", "<leader>tt", function() require("trouble").toggle("diagnostics") end)
+map("n", "<leader>ts", function() require("trouble").toggle("symbols") end, { desc = "Trouble symbols" })
 
 -- ======================
 -- Harpoon
 -- ======================
+map("n", "<leader>ha", function() require("harpoon"):list():add() end, { desc = "harpoon add file" })
+map("n", "<leader>hm", function()
+    local harpoon = require("harpoon")
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "harpoon toggle menu" })
+map("n", "<C-a>", function() require("harpoon"):list():select(1) end, { desc = "harpoon file 1" })
+map("n", "<C-s>", function() require("harpoon"):list():select(2) end, { desc = "harpoon file 2" })
+map("n", "<C-d>", function() require("harpoon"):list():select(3) end, { desc = "harpoon file 3" })
+map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "harpoon file 4" })
 
 -- ======================
 -- Neotest
