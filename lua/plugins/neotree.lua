@@ -61,6 +61,7 @@ return {
             },
 
             filesystem = {
+                bind_to_cwd = false,
                 filtered_items = {
                     visible = true, -- Show hidden items
                     hide_dotfiles = false,
@@ -73,6 +74,18 @@ return {
                 },
                 use_libuv_file_watcher = true,
                 hijack_netrw_behavior = "open_current",
+                components = {
+                    name = function(config, node, state)
+                        local name = node.name
+                        if node:get_depth() == 1 then
+                            name = vim.fn.fnamemodify(node.path, ":t")
+                        end
+                        return {
+                            text = name,
+                            highlight = config.highlight or "NeoTreeFileName",
+                        }
+                    end,
+                },
             },
         })
     end,
