@@ -8,6 +8,7 @@ return {
             require("mason").setup({
                 PATH = "skip",
                 ui = {
+                    border = "rounded",
                     icons = {
                         package_pending = " ",
                         package_installed = " ",
