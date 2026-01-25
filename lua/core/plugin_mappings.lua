@@ -101,6 +101,15 @@ map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "
 -- ======================
 -- Neogen
 -- ======================
+local neogen = require("neogen")
+
+-- Auto-detect context (function, class, type, etc.)
+vim.keymap.set("n", "<leader>ng", function() neogen.generate() end, { desc = "Generate annotation (auto)" })
+
+-- Specific generators
+vim.keymap.set("n", "<leader>nf", function() neogen.generate({ type = "func" }) end, { desc = "Generate function docstring" })
+vim.keymap.set("n", "<leader>nt", function() neogen.generate({ type = "type" }) end, { desc = "Generate type docstring" })
+vim.keymap.set("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { desc = "Generate class docstring" })
 
 -- ======================
 -- Surround
