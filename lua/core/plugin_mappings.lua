@@ -103,6 +103,14 @@ map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "
 -- ======================
 
 -- ======================
+-- Surround
+-- ======================
+-- NOTE:
+-- nvim-surround v3+ does NOT provide (probably, can't find it) a Lua API like add(), delete(), or change().
+-- This means we cannot move the keymaps here as Lua functions.
+-- They are kept in configs/surround.lua where the plugin is configured.
+
+-- ======================
 -- Conform
 -- ======================
 -- map({ "n", "x" }, "<leader>fm", function()

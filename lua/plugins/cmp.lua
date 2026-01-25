@@ -113,7 +113,7 @@ return {
                 }),
             },
             experimental = {
-                ghost_text = true, -- shows preview of completion inline
+                ghost_text = false, -- shows preview of completion inline
                 native_menu = false,
             },
             mapping = {
