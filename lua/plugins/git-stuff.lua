@@ -25,9 +25,9 @@ return {
                         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
                     end
 
-                    map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
-                    map("n", "<leader>gt", gs.toggle_current_line_blame, "Toggle blame")
-                    map("n", "<leader>gs", gs.toggle_signs, "Toggle git signs")
+                    map("n", "<leader>gsp", gs.preview_hunk, "Preview hunk")
+                    map("n", "<leader>gsb", gs.toggle_current_line_blame, "Toggle blame")
+                    map("n", "<leader>gst", gs.toggle_signs, "Toggle git signs")
                 end,
             })
         end,
@@ -37,10 +37,9 @@ return {
     {
         "tpope/vim-fugitive",
         cmd = { "Git", "G" },
-        -- Uncomment to add keybindings
-        -- keys = {
-        --   { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
-        -- },
+        keys = {
+          { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
+        },
     },
 
     -- Diffview - Git diff viewer
@@ -53,10 +52,9 @@ return {
                 use_icons = false,
             })
         end,
-        -- Uncomment to add keybindings
-        -- keys = {
-        --   { "<leader>dv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
-        --   { "<leader>dc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
-        -- },
+        keys = {
+          { "<leader>gdv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
+          { "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+        },
     },
 }

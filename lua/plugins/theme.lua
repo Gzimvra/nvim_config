@@ -142,7 +142,7 @@ return {
                 compile = false,  -- enable compiling the colorscheme
                 undercurl = true, -- enable undercurls
                 commentStyle = { italic = true },
-                functionStyle = {},
+                functionStyle = { bold = false },
                 keywordStyle = { italic = false },
                 statementStyle = { bold = false },
                 typeStyle = {},
@@ -172,7 +172,16 @@ return {
                         TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
                         ]]
 
-                        Boolean = { bold = false },
+                        -- Traditional vim highlight groups
+                        Boolean                    = { bold = false },
+                        Constant                   = { bold = false },
+                        Identifier                 = { bold = false },
+                        Function                   = { bold = false },
+                        Statement                  = { bold = false },
+                        PreProc                    = { bold = false },
+                        Type                       = { bold = false },
+                        Special                    = { bold = false },
+                        Keyword                    = { bold = false },
 
                         DiagnosticVirtualTextHint  = makeDiagnosticColor(theme.diag.hint),
                         DiagnosticVirtualTextInfo  = makeDiagnosticColor(theme.diag.info),

@@ -25,12 +25,7 @@ map('n', '<leader>pWs', function()
     local word = vim.fn.expand("<cWORD>")            -- Get the WORD (more comprehensive) under the cursor.
     vim.cmd("Telescope grep_string search=" .. word) -- Grep (search) that WORD in files using Telescope.
 end, { desc = "search the current word under cursor (entire token)" })
--- map(
---   "n",
---   "<leader>fa",
---   "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
---   { desc = "telescope find all files" }
--- )
+-- map( "n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
 
 -- ======================
 -- Comments
@@ -54,6 +49,40 @@ end, { desc = 'Toggle comment on selection' })
 -- ======================
 -- Lsp
 -- ======================
+-- Navigation
+map("n", "<leader>gd", vim.lsp.buf.definition, { desc = "LSP: [G]o to [D]efinition" })
+map("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "LSP: Go to declaration" })
+map("n", "<leader>gr", vim.lsp.buf.references, { desc = "LSP: [G]o to [R]eferences" })
+map("n", "<leader>gi", vim.lsp.buf.implementation, { desc = "LSP: [G]o to [I]mplementation" })
+map("n", "<leader>gt", vim.lsp.buf.type_definition, { desc = "LSP: [G]o to [T]ype Definition" })
+
+-- Actions
+map("n", "<leader>h", vim.lsp.buf.hover, { desc = "LSP: [H]over Documentation" })
+map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ctions" })
+map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]ename all Instances" })
+
+-- Formatting
+map("n", "<A-F>", vim.lsp.buf.format, { desc = "LSP: [F]ormat Current File" })
+map("v", "<A-F>", function()
+    local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+    local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+    vim.lsp.buf.format({
+        range = {
+            start = { start_pos[1], start_pos[2] },
+            ["end"] = { end_pos[1], end_pos[2] },
+        },
+        async = true,
+    })
+end, { desc = "LSP: [F]ormat Selected Range" })
+
+-- Workspace
+map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "LSP: Add workspace folder" })
+map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "LSP: Remove workspace folder" })
+map("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, { desc = "LSP: List workspace folders" })
+map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { desc = "LSP: Find [W]orkplace [S]ymbol" })
+
+-- Diagnostics
+map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "LSP: Open [D]iagnostic [L]ist" })
 
 -- ======================
 -- Git Stuff

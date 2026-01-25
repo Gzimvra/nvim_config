@@ -61,29 +61,6 @@ return {
                 end
             end
 
-            local on_attach = function(_, bufnr)
-                local function map(mode, lhs, rhs, desc)
-                    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = "LSP " .. desc })
-                end
-
-                map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-                map("n", "gd", vim.lsp.buf.definition, "Go to definition")
-                map("n", "<leader>D", vim.lsp.buf.type_definition, "Go to type definition")
-                map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
-                map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
-                map("n", "<leader>wl", function()
-                    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                end, "List workspace folders")
-                map("n", "<leader>ra", vim.lsp.buf.rename, "Rename symbol")
-            end
-
-            -- Attach keymaps on LSP attach
-            vim.api.nvim_create_autocmd("LspAttach", {
-                callback = function(args)
-                    on_attach(nil, args.buf)
-                end,
-            })
-
             -- Diagnostics UI
             vim.diagnostic.config({
                 update_in_insert = false,
