@@ -44,5 +44,6 @@
   "undotree": { "branch": "master", "commit": "178d19e00a643f825ea11d581b1684745d0c4eda" },
   "vague.nvim": { "branch": "main", "commit": "fcc283576764474ccfbbcca240797d5d7f4d8a78" },
   "vesper": { "branch": "main", "commit": "1717b1ad657c94bec3fc2bdebb0c55452d9fe46d" },
-  "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" }
+  "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
+  "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
 }

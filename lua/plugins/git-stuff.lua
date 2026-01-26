@@ -25,9 +25,9 @@ return {
                         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
                     end
 
-                    map("n", "<leader>gsp", gs.preview_hunk, "Preview hunk")
-                    map("n", "<leader>gsb", gs.toggle_current_line_blame, "Toggle blame")
-                    map("n", "<leader>gst", gs.toggle_signs, "Toggle git signs")
+                    map("n", "<leader>gh", gs.preview_hunk, "Preview hunk")
+                    map("n", "<leader>gb", gs.toggle_current_line_blame, "Toggle blame")
+                    map("n", "<leader>gs", gs.toggle_signs, "Toggle git signs")
                 end,
             })
         end,
@@ -53,8 +53,8 @@ return {
             })
         end,
         keys = {
-          { "<leader>gdv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
-          { "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+          { "<leader>gv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
+          { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
         },
     },
 }
