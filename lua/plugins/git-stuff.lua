@@ -38,7 +38,7 @@ return {
         "tpope/vim-fugitive",
         cmd = { "Git", "G" },
         keys = {
-          { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
+            { "<leader>gf", "<cmd>Git<CR>", desc = "Git status" },
         },
     },
 
@@ -53,8 +53,8 @@ return {
             })
         end,
         keys = {
-          { "<leader>gv", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
-          { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
+            { "<leader>gv", "<cmd>DiffviewOpen<CR>",  desc = "Diffview open" },
+            { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
         },
     },
 }

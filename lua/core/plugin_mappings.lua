@@ -3,8 +3,8 @@ local map = vim.keymap.set
 -- ======================
 -- NeoTree
 -- ======================
-vim.keymap.set("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "neotree toggle window" })
-vim.keymap.set("n", "<leader>e", "<cmd>Neotree focus<CR>", { desc = "neotree focus window" })
+map("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "neotree toggle window" })
+map("n", "<leader>e", "<cmd>Neotree focus<CR>", { desc = "neotree focus window" })
 
 -- ======================
 -- Telescope
@@ -85,32 +85,9 @@ map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { desc = "LSP: Find [W]orkp
 map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "LSP: Open [D]iagnostic [L]ist" })
 
 -- ======================
--- Git Stuff
--- ======================
-
-
-
-
-
-
-
-
-
--- ======================
--- Cmp
--- ======================
--- NOTE:
--- nvim-cmp mappings (cmp.mapping.*) are NOT normal Neovim keymaps.
--- They ONLY work while the completion menu is visible and MUST stay
--- inside cmp.setup({ mapping = { ... } }).
---
--- Do NOT move cmp mappings from plugins/cmp.lua to core/plugin_mappings.lua or vim.keymap.set
--- or anywhere else, they will NOT work.
-
--- ======================
 -- Undotree
 -- ======================
-vim.keymap.set("n", "<leader>ut", function() vim.cmd.UndotreeToggle() end, { desc = "Toggle UndoTree" })
+map("n", "<leader>ut", function() vim.cmd.UndotreeToggle() end, { desc = "Toggle UndoTree" })
 
 -- ======================
 -- Trouble
@@ -134,14 +111,21 @@ map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "
 -- ======================
 -- Neotest
 -- ======================
+local neotest = require("neotest")
 
+-- Run tests
+map("n", "<leader>tn", function() neotest.run.run() end, { desc = "Run nearest test" })
+map("n", "<leader>tf", function() neotest.run.run(vim.fn.expand("%")) end, { desc = "Run tests in current file" })
+map("n", "<leader>ta", function() neotest.run.run(vim.loop.cwd()) end, { desc = "Run all tests" })
+map("n", "<leader>tl", function() neotest.run.run_last() end, { desc = "Run last test" })
 
+-- Output
+map("n", "<leader>tc", function() neotest.summary.toggle() end, { desc = "Toggle test summary" })
+map("n", "<leader>to", function() neotest.output.open({ enter = true }) end, { desc = "Open test output" })
+map("n", "<leader>tO", function() neotest.output_panel.toggle() end, { desc = "Toggle output panel" })
 
-
-
-
-
-
+-- Stop
+map("n", "<leader>tq", function() neotest.run.stop() end, { desc = "Stop running tests" })
 
 -- ======================
 -- Neogen
@@ -149,12 +133,12 @@ map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "
 local neogen = require("neogen")
 
 -- Auto-detect context (function, class, type, etc.)
-vim.keymap.set("n", "<leader>ng", function() neogen.generate() end, { desc = "Generate annotation (auto)" })
+map("n", "<leader>ng", function() neogen.generate() end, { desc = "Generate annotation (auto)" })
 
 -- Specific generators
-vim.keymap.set("n", "<leader>nf", function() neogen.generate({ type = "func" }) end, { desc = "Generate function docstring" })
-vim.keymap.set("n", "<leader>nt", function() neogen.generate({ type = "type" }) end, { desc = "Generate type docstring" })
-vim.keymap.set("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { desc = "Generate class docstring" })
+map("n", "<leader>nf", function() neogen.generate({ type = "func" }) end, { desc = "Generate function docstring" })
+map("n", "<leader>nt", function() neogen.generate({ type = "type" }) end, { desc = "Generate type docstring" })
+map("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { desc = "Generate class docstring" })
 
 -- ======================
 -- Surround
@@ -162,7 +146,28 @@ vim.keymap.set("n", "<leader>nc", function() neogen.generate({ type = "class" })
 -- NOTE:
 -- nvim-surround v3+ does NOT provide (probably, can't find it) a Lua API like add(), delete(), or change().
 -- This means we cannot move the keymaps here as Lua functions.
--- They are kept in configs/surround.lua where the plugin is configured.
+-- They are kept in lua/plugins/surround.lua where the plugin is configured.
+
+-- ======================
+-- Git Stuff
+-- ======================
+-- NOTE:
+-- The Git keymaps cannot be moved directly into this file because
+-- they plugins are buffer-local and only attach to git-tracked buffers.
+-- The keymaps rely on the `on_attach(bufnr)` hook to get the correct buffer context
+-- and access the gitsigns API safely.
+-- Therefore, the actual keymaps are defined in: lua/plugins/git-stuff.lua
+
+-- ======================
+-- Cmp
+-- ======================
+-- NOTE:
+-- nvim-cmp mappings (cmp.mapping.*) are NOT normal Neovim keymaps.
+-- They ONLY work while the completion menu is visible and MUST stay
+-- inside cmp.setup({ mapping = { ... } }).
+--
+-- Do NOT move cmp mappings from lua/plugins/cmp.lua to core/plugin_mappings.lua or vim.keymap.set
+-- or anywhere else, they will NOT work.
 
 -- ======================
 -- Conform
