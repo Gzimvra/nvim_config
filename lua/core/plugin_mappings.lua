@@ -62,23 +62,23 @@ map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ctions"
 map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]ename all Instances" })
 
 -- Formatting
-map("n", "<A-F>", vim.lsp.buf.format, { desc = "LSP: [F]ormat Current File" })
-map("v", "<A-F>", function()
-    local start_pos = vim.api.nvim_buf_get_mark(0, "<")
-    local end_pos = vim.api.nvim_buf_get_mark(0, ">")
-    vim.lsp.buf.format({
-        range = {
-            start = { start_pos[1], start_pos[2] },
-            ["end"] = { end_pos[1], end_pos[2] },
-        },
-        async = true,
-    })
-end, { desc = "LSP: [F]ormat Selected Range" })
+-- map("n", "<A-F>", vim.lsp.buf.format, { desc = "LSP: [F]ormat Current File" })
+-- map("v", "<A-F>", function()
+--     local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+--     local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+--     vim.lsp.buf.format({
+--         range = {
+--             start = { start_pos[1], start_pos[2] },
+--             ["end"] = { end_pos[1], end_pos[2] },
+--         },
+--         async = true,
+--     })
+-- end, { desc = "LSP: [F]ormat Selected Range" })
 
 -- Workspace
 map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "LSP: Add workspace folder" })
 map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "LSP: Remove workspace folder" })
-map("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, { desc = "LSP: List workspace folders" })
+map("n", "<leader>wf", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, { desc = "LSP: List workspace folders" })
 map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { desc = "LSP: Find [W]orkplace [S]ymbol" })
 
 -- Diagnostics
@@ -141,6 +141,14 @@ map("n", "<leader>nt", function() neogen.generate({ type = "type" }) end, { desc
 map("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { desc = "Generate class docstring" })
 
 -- ======================
+-- Conform
+-- ======================
+-- Formatting
+map({ "n", "v" }, "<A-F>", function()
+	require("conform").format({ async = true, lsp_format = "fallback" })
+end, { desc = "Format File/Range" })
+
+-- ======================
 -- Surround
 -- ======================
 -- NOTE:
@@ -168,10 +176,3 @@ map("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { des
 --
 -- Do NOT move cmp mappings from lua/plugins/cmp.lua to core/plugin_mappings.lua or vim.keymap.set
 -- or anywhere else, they will NOT work.
-
--- ======================
--- Conform
--- ======================
--- map({ "n", "x" }, "<leader>fm", function()
---   require("conform").format { lsp_fallback = true }
--- end, { desc = "general format file" })
