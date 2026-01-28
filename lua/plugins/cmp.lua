@@ -1,6 +1,6 @@
 return {
     "hrsh7th/nvim-cmp",
-    lazy = false,
+    event = "InsertEnter",
     dependencies = {
         -- CMP sources
         "saadparwaiz1/cmp_luasnip",
