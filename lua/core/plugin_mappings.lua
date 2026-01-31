@@ -17,12 +17,12 @@ map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "telescope find mark
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
 map("n", "<leader>fgc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-map('n', '<leader>pws', function()
-    local word = vim.fn.expand("<cword>")            -- Get the word under the cursor.
+map("n", "<leader>pws", function()
+    local word = vim.fn.expand "<cword>" -- Get the word under the cursor.
     vim.cmd("Telescope grep_string search=" .. word) -- Grep (search) that word in files using Telescope.
 end, { desc = "search the current word under cursor (single word)" })
-map('n', '<leader>pWs', function()
-    local word = vim.fn.expand("<cWORD>")            -- Get the WORD (more comprehensive) under the cursor.
+map("n", "<leader>pWs", function()
+    local word = vim.fn.expand "<cWORD>" -- Get the WORD (more comprehensive) under the cursor.
     vim.cmd("Telescope grep_string search=" .. word) -- Grep (search) that WORD in files using Telescope.
 end, { desc = "search the current word under cursor (entire token)" })
 -- map( "n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
@@ -31,20 +31,20 @@ end, { desc = "search the current word under cursor (entire token)" })
 -- Comments
 -- ======================
 -- <C-_> is {Ctrl+/} because <C-/> is not recognized
-map('n', '<C-_>', function()
-    require('Comment.api').toggle.linewise.current()
-end, { desc = 'Toggle comment on current line' })
+map("n", "<C-_>", function()
+    require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle comment on current line" })
 
-map('x', '<C-_>', function()
-    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-    vim.api.nvim_feedkeys(esc, 'nx', false)
+map("x", "<C-_>", function()
+    local esc = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+    vim.api.nvim_feedkeys(esc, "nx", false)
     local mode = vim.fn.visualmode()
-    if mode == '\22' then -- \22 is Ctrl-V (visual block mode)
-        require('Comment.api').toggle.blockwise(mode)
+    if mode == "\22" then -- \22 is Ctrl-V (visual block mode)
+        require("Comment.api").toggle.blockwise(mode)
     else
-        require('Comment.api').toggle.linewise(mode)
+        require("Comment.api").toggle.linewise(mode)
     end
-end, { desc = 'Toggle comment on selection' })
+end, { desc = "Toggle comment on selection" })
 
 -- ======================
 -- Lsp
@@ -78,7 +78,9 @@ map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]ename all Instances
 -- Workspace
 map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "LSP: Add workspace folder" })
 map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "LSP: Remove workspace folder" })
-map("n", "<leader>wf", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, { desc = "LSP: List workspace folders" })
+map("n", "<leader>wf", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, { desc = "LSP: List workspace folders" })
 map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { desc = "LSP: Find [W]orkplace [S]ymbol" })
 
 -- Diagnostics
@@ -87,66 +89,154 @@ map("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "LSP: Open [D]iagnost
 -- ======================
 -- Undotree
 -- ======================
-map("n", "<leader>ut", function() vim.cmd.UndotreeToggle() end, { desc = "Toggle UndoTree" })
+map("n", "<leader>ut", function()
+    vim.cmd.UndotreeToggle()
+end, { desc = "Toggle UndoTree" })
 
 -- ======================
 -- Trouble
 -- ======================
-map("n", "<leader>tt", function() require("trouble").toggle("diagnostics") end)
-map("n", "<leader>ts", function() require("trouble").toggle("symbols") end, { desc = "Trouble symbols" })
+map("n", "<leader>tt", function()
+    require("trouble").toggle "diagnostics"
+end)
+map("n", "<leader>ts", function()
+    require("trouble").toggle "symbols"
+end, { desc = "Trouble symbols" })
 
 -- ======================
 -- Harpoon
 -- ======================
-map("n", "<leader>ha", function() require("harpoon"):list():add() end, { desc = "harpoon add file" })
+map("n", "<leader>ha", function()
+    require("harpoon"):list():add()
+end, { desc = "harpoon add file" })
 map("n", "<leader>hm", function()
-    local harpoon = require("harpoon")
+    local harpoon = require "harpoon"
     harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "harpoon toggle menu" })
-map("n", "<C-a>", function() require("harpoon"):list():select(1) end, { desc = "harpoon file 1" })
-map("n", "<C-s>", function() require("harpoon"):list():select(2) end, { desc = "harpoon file 2" })
-map("n", "<C-d>", function() require("harpoon"):list():select(3) end, { desc = "harpoon file 3" })
-map("n", "<C-f>", function() require("harpoon"):list():select(4) end, { desc = "harpoon file 4" })
+map("n", "<C-a>", function()
+    require("harpoon"):list():select(1)
+end, { desc = "harpoon file 1" })
+map("n", "<C-s>", function()
+    require("harpoon"):list():select(2)
+end, { desc = "harpoon file 2" })
+map("n", "<C-d>", function()
+    require("harpoon"):list():select(3)
+end, { desc = "harpoon file 3" })
+map("n", "<C-f>", function()
+    require("harpoon"):list():select(4)
+end, { desc = "harpoon file 4" })
 
 -- ======================
 -- Neotest
 -- ======================
-local neotest = require("neotest")
+local neotest = require "neotest"
 
 -- Run tests
-map("n", "<leader>tn", function() neotest.run.run() end, { desc = "Run nearest test" })
-map("n", "<leader>tf", function() neotest.run.run(vim.fn.expand("%")) end, { desc = "Run tests in current file" })
-map("n", "<leader>ta", function() neotest.run.run(vim.loop.cwd()) end, { desc = "Run all tests" })
-map("n", "<leader>tl", function() neotest.run.run_last() end, { desc = "Run last test" })
+map("n", "<leader>tn", function()
+    neotest.run.run()
+end, { desc = "Run nearest test" })
+map("n", "<leader>tf", function()
+    neotest.run.run(vim.fn.expand "%")
+end, { desc = "Run tests in current file" })
+map("n", "<leader>ta", function()
+    neotest.run.run(vim.loop.cwd())
+end, { desc = "Run all tests" })
+map("n", "<leader>tl", function()
+    neotest.run.run_last()
+end, { desc = "Run last test" })
 
 -- Output
-map("n", "<leader>tc", function() neotest.summary.toggle() end, { desc = "Toggle test summary" })
-map("n", "<leader>to", function() neotest.output.open({ enter = true }) end, { desc = "Open test output" })
-map("n", "<leader>tO", function() neotest.output_panel.toggle() end, { desc = "Toggle output panel" })
+map("n", "<leader>tc", function()
+    neotest.summary.toggle()
+end, { desc = "Toggle test summary" })
+map("n", "<leader>to", function()
+    neotest.output.open { enter = true }
+end, { desc = "Open test output" })
+map("n", "<leader>tO", function()
+    neotest.output_panel.toggle()
+end, { desc = "Toggle output panel" })
 
 -- Stop
-map("n", "<leader>tq", function() neotest.run.stop() end, { desc = "Stop running tests" })
+map("n", "<leader>tq", function()
+    neotest.run.stop()
+end, { desc = "Stop running tests" })
 
 -- ======================
 -- Neogen
 -- ======================
-local neogen = require("neogen")
+local neogen = require "neogen"
 
 -- Auto-detect context (function, class, type, etc.)
-map("n", "<leader>ng", function() neogen.generate() end, { desc = "Generate annotation (auto)" })
+map("n", "<leader>ng", function()
+    neogen.generate()
+end, { desc = "Generate annotation (auto)" })
 
 -- Specific generators
-map("n", "<leader>nf", function() neogen.generate({ type = "func" }) end, { desc = "Generate function docstring" })
-map("n", "<leader>nt", function() neogen.generate({ type = "type" }) end, { desc = "Generate type docstring" })
-map("n", "<leader>nc", function() neogen.generate({ type = "class" }) end, { desc = "Generate class docstring" })
+map("n", "<leader>nf", function()
+    neogen.generate { type = "func" }
+end, { desc = "Generate function docstring" })
+map("n", "<leader>nt", function()
+    neogen.generate { type = "type" }
+end, { desc = "Generate type docstring" })
+map("n", "<leader>nc", function()
+    neogen.generate { type = "class" }
+end, { desc = "Generate class docstring" })
 
 -- ======================
 -- Conform
 -- ======================
 -- Formatting
 map({ "n", "v" }, "<A-F>", function()
-	require("conform").format({ async = true, lsp_format = "fallback" })
+    require("conform").format { async = true, lsp_format = "fallback" }
 end, { desc = "Format File/Range" })
+
+-- ======================
+-- DAP
+-- ======================
+local dap = require "dap"
+local dapui = require "dapui"
+local widgets = require "dap.ui.widgets"
+
+-- Basic debugging
+map("n", "<F5>", dap.continue, { desc = "DAP: Start or Continue" })
+map("n", "<F10>", dap.step_over, { desc = "DAP: Step Over" })
+map("n", "<F11>", dap.step_into, { desc = "DAP: Step Into" })
+map("n", "<F12>", dap.step_out, { desc = "DAP: Step Out" })
+
+-- Breakpoints
+map("n", "<leader>db", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
+map("n", "<leader>dB", function()
+    dap.set_breakpoint(vim.fn.input "Breakpoint condition: ")
+end, { desc = "DAP: Conditional Breakpoint" })
+map("n", "<leader>dlp", function()
+    dap.set_breakpoint(nil, nil, vim.fn.input "Log point message: ")
+end, { desc = "DAP: Log Point" })
+
+-- UI controls
+map("n", "<leader>du", dapui.toggle, { desc = "DAP: Toggle UI" })
+map("n", "<leader>dr", dap.repl.toggle, { desc = "DAP: Toggle REPL" })
+map("n", "<leader>dl", dap.run_last, { desc = "DAP: Run Last" })
+
+-- Inspection
+map({ "n", "v" }, "<leader>dh", widgets.hover, { desc = "DAP: Hover" })
+map({ "n", "v" }, "<leader>dp", widgets.preview, { desc = "DAP: Preview" })
+map("n", "<leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "DAP: Frames" })
+map("n", "<leader>ds", function() widgets.centered_float(widgets.scopes) end, { desc = "DAP: Scopes" })
+
+-- Session management
+map("n", "<leader>dc", dap.terminate, { desc = "DAP: Terminate" })
+map("n", "<leader>dC", function()
+    dap.clear_breakpoints()
+    vim.notify("All breakpoints cleared", vim.log.levels.INFO)
+end, { desc = "DAP: Clear All Breakpoints" })
+
+-- Language-specific
+-- map("n", "<leader>dgt", function()
+--     require("dap-go").debug_test()
+-- end, { desc = "DAP: Go Debug Test" })
+-- map("n", "<leader>dgl", function()
+--     require("dap-go").debug_last_test()
+-- end, { desc = "DAP: Go Debug Last Test" })
 
 -- ======================
 -- Surround
