@@ -7,6 +7,7 @@ return {
 				lua = { "stylua" },
 				python = { "black", "isort" },
 				go = { "goimports", "gofmt" },
+                java = { "google-java-format" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
@@ -20,6 +21,9 @@ return {
             formatters = {
                 isort = {
                     args = { "--stdout", "--filename", "$FILENAME", "-" },
+                },
+                ["google-java-format"] = {
+                    prepend_args = { "--aosp" },
                 },
             },
 			-- Uncomment to enable format on save

@@ -105,6 +105,7 @@ return {
                     "ts_ls",
                     "rust_analyzer",
                     "dockerls",
+                    "jdtls",
                 },
                 handlers = {
                     -- Default handler
@@ -243,6 +244,10 @@ return {
                             capabilities = capabilities,
                             on_init = on_init,
                         })
+                    end,
+
+                    ["jdtls"] = function()
+                        -- Do nothing here - jdtls will be configured in ftplugin/java.lua
                     end,
                 },
             })
