@@ -12,6 +12,7 @@ return {
             javascriptreact = { "eslint_d" },
             typescriptreact = { "eslint_d" },
             go = { "golangcilint" },
+            -- java = { "checkstyle" },
             -- markdown = { "markdownlint" },
             -- yaml = { "yamllint" },
             -- json = { "jsonlint" },
